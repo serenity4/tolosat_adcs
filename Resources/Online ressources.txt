@@ -1,0 +1,4 @@
+Online resources
+
+Quaternions and rotations: http://mecaspa.cannes-aero-patrimoine.net/SCAO/QUATERN/QUATERN0.HTM (quaternion definition and analogy with 3D rotations)
+http://mecaspa.cannes-aero-patrimoine.net/SCAO/QUATERN/QUATERN1.htm (quaternion derivative and angular velocity
