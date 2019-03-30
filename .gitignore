@@ -1,3 +1,7 @@
+PILIA/*
+MATLAB/*
+References/(Space technology series) David A Vallado - Fundamentals of astrodynamics and applications-McGraw-Hill (1997).pdf
+Reports/*.pdf
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -240,8 +244,3 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
-
-PILIA/*
-MATLAB/*
-References/(Space technology series) David A Vallado - Fundamentals of astrodynamics and applications-McGraw-Hill (1997).pdf
-Reports/*.pdf

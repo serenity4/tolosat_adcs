@@ -70,7 +70,7 @@ As described in \cite{book:911134}, the first axis ($X_{J2000}$) points towards 
 
 \subsection{RSW}
 
-The RSW frame, as described in \cite{vallado2004covariance} and \cite{book:911134}, is a satellite coordinate system usually used for the description of relative positions or displacements. The first axis ($R$) is the normalized radius vector of the satellite with respect to the Earth's center; the third axis ($W$) is the normalized cross-product between $R$ and the satellite velocity vector (normal w.r.t. the orbital plane), and the second one ($S$) completes the orthonormal RSW frame (along the direction of the velocity vector, but only in its direction if the orbit is circular or if the spacecraft is on the apogee or perigee of an elliptic orbit). \\
+The RSW frame, as described in \cite{vallado2004covariance} and \cite{book:911134}, is a satellite coordinate system usually used for the description of relative positions or displacements. The first axis ($R$) is the normalized radius vector of the satellite with respect to the Earth's center; the third axis ($W$) is the normalized cross-product between $R$ and the satellite velocity vector (normal w.r.t. the orbital plane), and the second one ($S$) completes the orthonormal RSW frame (along the direction of the velocity vector, and in its exact direction if the orbit is circular or if the spacecraft is on the apogee or perigee of an elliptic orbit). \\
 By noting $\vec{r}$ the spacecraft position vector and $\vec{v}$ its velocity in the J2000 frame, we obtain:
 \[ R = \frac{\vec{r}}{\norm{\vec{r}}}, \;\; W = \frac{\vec{r}\wedge \vec{v}}{\norm{\vec{v}}}, \; \; S = W \wedge R \]
 
