@@ -29,7 +29,8 @@ def main():
     eng.set_param(model_name,'SaveTime','off', nargout=0);
     eng.set_param(model_name,'LibraryLinkDisplay','all', nargout=0);
     eng.set_param(model_name,'MultiTaskRateTransMsg','warning', nargout=0)
-    print("Welcome to the PILIA python interfacer! Available commands are:\nhelp - displays help\nupdate - update workspace with new configuration variables\nexit - exits the prompt")
+    print("Welcome to the PILIA python interfacer! Available commands are:")
+    print("{:<7} - displays help\n{:<7} - update workspace with new configuration variables\n{:<7} - exits the prompt".format("help", "update", "exit"))
 
     while 1:
         command = input().split(sep=" ")
