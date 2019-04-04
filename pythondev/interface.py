@@ -7,7 +7,9 @@ import os
 # eng = matlab.engine.start_matlab(ref[0])
 
 def main():
+    ### enter your .slx file path
     model_path = 'PILIA/PROJECTS/tolosat_adcs_kalman/V1/V1.slx'
+    ### end of simulation
     end = 5000
 
     eng = matlab.engine.start_matlab("-desktop")
@@ -35,7 +37,7 @@ def main():
     while 1:
         command = input().split(sep=" ")
         if command[0] == 'help':
-            print("haha you got no help")
+            print("not implemented yet")
         elif command[0] == 'update':
             eng.eval('clear', nargout=0)
             ConfParam = eng.eval('Main_ConfLaunch()')
