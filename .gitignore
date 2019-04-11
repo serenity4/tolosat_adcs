@@ -1,6 +1,16 @@
-PILIA/*
 MATLAB/*
 References/(Space technology series) David A Vallado - Fundamentals of astrodynamics and applications-McGraw-Hill (1997).pdf
+slprj/*
+pythondev/positions/GMAT/*.txt
+pythondev/positions/JSON/*.json
+*.mat
+tosend
+PILIA/CodeForVTS
+PILIA/DOC
+PILIA/GUI
+PILIA/LIBRARY
+
+
 Reports/*.pdf
 ## Core latex/pdflatex auxiliary files:
 *.aux
