@@ -9,6 +9,8 @@ PILIA/CodeForVTS
 PILIA/DOC
 PILIA/GUI
 PILIA/LIBRARY
+PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF/slprj
+*.slxc
 
 
 Reports/*.pdf

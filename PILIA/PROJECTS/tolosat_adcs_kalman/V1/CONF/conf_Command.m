@@ -41,6 +41,6 @@ function confCommand = conf_Command()
 %   4.      Earth and Target Pointing
 %   else.   Simulink Error
 
-confCommand.CommandProfile = [0 1];
+confCommand.CommandProfile = [0 2];
 
 end

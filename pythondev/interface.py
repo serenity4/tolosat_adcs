@@ -1,6 +1,7 @@
 import numpy as np
 import matlab.engine
 import os
+import argparse
 
 # ref = matlab.engine.find_matlab()
 # print("Session ID found: {}".format(ref[0]))
@@ -8,19 +9,36 @@ import os
 
 def main():
 
-    model = 'Detumbling.slx'
-    model_path = 'PILIA/PROJECTS/tolosat_adcs_kalman/V1/' + model
+    parser = argparse.ArgumentParser()
+    parser.add_argument('model', default='V1', help='Model to load. Choices are: V1 - Detumbling - Control - RW_1')
+    args = parser.parse_args()
+    model = args.model
+    if model == 'V1' or model == 'Detumbling' or model == 'Control' or 'RW_1':
+        model = model + '.slx'
+        model_path = 'PILIA/PROJECTS/tolosat_adcs_kalman/V1/' + model
+    # elif model == 'complete':
+    #     model = model + '.slx'
+    #     model_path = 'PILIA/PROJECTS/tolosat_adcs_kalman/Complete/complete/' + model
+    else:
+        print("Unknown model. Process aborted.")
+        exit()
+
     end = 5000
 
+    print("Launching MATLAB...")
     eng = matlab.engine.start_matlab("-desktop")
+    print("MATLAB opened. Adding PILIA libraries to path...")
     ### starts the engine and opens it
     eng.eval('addpath(genpath("PILIA"))')
     ### add PILIA to path as it tends to slip away from MATLAB's path
     eng.eval('cd PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF', nargout=0)
+    print("Setting configuration parameters...")
     ConfParam = eng.eval('Main_ConfLaunch()')
     eng.workspace['ConfParam'] = ConfParam
     ## builds configuration parameters
+    print("Opening model " + model + "...")
     eng.open_system(model_path, 'window', nargout=0)
+    print("Model opened.")
     ### opens the Simulink model
     model_name = eng.eval('gcs')
     ### gets current simulink model name
@@ -42,6 +60,7 @@ def main():
             eng.eval('clear', nargout=0)
             ConfParam = eng.eval('Main_ConfLaunch()')
             eng.workspace['ConfParam'] = ConfParam
+            print('----- Configuration parameters successfully updated.')
         elif command[0] == 'exec':
             eng.eval(command[1:])
         elif command[0] == 'exit':

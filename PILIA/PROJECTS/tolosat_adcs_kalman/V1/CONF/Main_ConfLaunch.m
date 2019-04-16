@@ -24,6 +24,8 @@ ConfParam.confEarthAndTargetPointing = conf_EarthAndTargetPointing(ConfParam.con
 ConfParam.confInertialAndTargetPointing = conf_InertialAndTargetPointing(ConfParam.confTargetPointing.StaPosECEF);
 ConfParam.confMTM = conf_MTM();
 ConfParam.confES = conf_ES();
+ConfParam.confRWS = conf_RWS();
+ConfParam.confRWS_PDcontroller = conf_RWS_PDcontroller(ConfParam.confSatFeatures.I_sat);
 ConfParam.confEstim = conf_Estim(ConfParam.confES.frequency);
 ConfParam.confMTBcontroller = conf_MTBcontroller(ConfParam.confSatFeatures.I_sat,...
     ConfParam.confES.frequency);

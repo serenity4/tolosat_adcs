@@ -1,12 +1,12 @@
 function confEarthPointing = conf_EarthPointing()
 
 % conf_EarthPointing - Configuration function of the Earth pointing command
-% 
+%
 %   This function allows you to choose which direction, in the satellite
 %   reference frame must be directed to the Earth center and which other
 %   must be perpendicular to the orbit. The third axis completes the
 %   Cartesian reference frame.
-% 
+%
 %   Outputs:
 %       - confEarthPointing: Matlab structure containing the information
 %       concerning your choice of the axis for this kind of pointing.
@@ -14,7 +14,7 @@ function confEarthPointing = conf_EarthPointing()
 % Choose the vector of the satellite body frame which is towards the Earth
 % (the equivalent of the z-axis of the MRF in the figure 20 of the User
 % Manual). Please enter a unit vector.
-AxisToEarth = [0; 0; 1];
+AxisToEarth = [1; 0; 0];
 
 % Choose the vector of the satellite body frame which is perpendicular to
 % the orbit (the equivalent of the y-axis of the MRF in the figure 20 of
@@ -37,7 +37,7 @@ else
     confEarthPointing.AxisNormOrbit = 1/norm(AxisNormOrbit)*AxisNormOrbit;
     AxisToVel = cross_prod(confEarthPointing.AxisNormOrbit, confEarthPointing.AxisToEarth);
     confEarthPointing.M = [confEarthPointing.AxisToEarth AxisToVel confEarthPointing.AxisNormOrbit];
-    
+
 end
 
 end
