@@ -4,6 +4,9 @@ import json
 from numpy import pi
 
 def plot_mat(ifile):
+    """
+    TEMPORARY: do not use
+    """
     import h5py
     file = h5py.File('PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF/RW1_speed.mat', 'r')
     data = np.array(file.get('omega'))
@@ -19,6 +22,9 @@ def plot_mat(ifile):
     plt.show()
 
 def plot_json(ifile):
+    """
+    Plots simulation outputs from a .json file (matplotlib plots)
+    """
     with open(ifile, 'r') as ifile:
         simres = json.load(ifile)
     rw_speeds = [simres['rw1_omega'], simres['rw2_omega'], simres['rw3_omega'], simres['rw4_omega']]
@@ -34,6 +40,9 @@ def plot_json(ifile):
     plt.show()
 
 def plotly_json(ifile):
+    """
+    Plots simulation outputs from a .json file (Plotly plots)
+    """
     import plotly.offline
     import plotly.graph_objs as go
     with open(ifile, 'r') as ifile:
