@@ -29,5 +29,6 @@ ConfParam.confRWS_PDcontroller = conf_RWS_PDcontroller(ConfParam.confSatFeatures
 ConfParam.confEstim = conf_Estim(ConfParam.confES.frequency);
 ConfParam.confMTBcontroller = conf_MTBcontroller(ConfParam.confSatFeatures.I_sat,...
     ConfParam.confES.frequency);
+ConfParam.confMaxAngle = conf_MaxAngle();
 
 end

@@ -18,9 +18,11 @@ def main():
                         help='Model to load. Choices are: V1 - Detumbling - Control - RW_1')
     parser.add_argument('-end', type=int, default=1000,
                         help="End simulation time")
+    parser.add_argument('--run', default=False, help="Boolean used to decide whether to execute the Simulink simulation. Set to True to run the model.")
     args = parser.parse_args()
     end = args.end
     model = args.model
+    run = args.run
     path = os.getcwd().replace('\\', '/')
     path_simres = 'pythondev/simres_data'
     simres_output = 'simres.json'
@@ -60,7 +62,8 @@ def main():
     eng.set_param(model_name, 'SaveTime', 'off', nargout=0)
     eng.set_param(model_name, 'LibraryLinkDisplay', 'all', nargout=0)
     eng.set_param(model_name, 'MultiTaskRateTransMsg', 'warning', nargout=0)
-    eng.eval("sim(\'" + model_name + "\');")
+    if run:
+        eng.eval("sim(\'" + model_name + "\');")
     print("\n\033[32;1;4mWelcome to the PILIA python interfacer! Available commands are:")
     print("{:<7} - displays help\n{:<7} - update workspace with new configuration variables\n{:<7} - post-processes data\n{:<7} - exits the prompt\033[30;0;4m\n".format("help", "update", "pp", "exit"))
 
