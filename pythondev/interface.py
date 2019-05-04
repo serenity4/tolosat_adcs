@@ -18,11 +18,13 @@ def main():
                         help='Model to load. Choices are: V1 - Detumbling - Control - RW_1')
     parser.add_argument('-end', type=int, default=1000,
                         help="End simulation time")
-    parser.add_argument('--run', default=False, help="Boolean used to decide whether to execute the Simulink simulation. Set to True to run the model.")
+    parser.add_argument('--run', dest='run', action='store_true', help="Call with this option to automatically run the Simulink model when loaded.")
+    parser.add_argument('--desktop', dest='desktop', action='store_true', help="Call with this option to run MATLAB in desktop mode.")
     args = parser.parse_args()
     end = args.end
     model = args.model
     run = args.run
+    desktop = args.desktop
     path = os.getcwd().replace('\\', '/')
     path_simres = 'pythondev/simres_data'
     simres_output = 'simres.json'
@@ -39,7 +41,10 @@ def main():
         exit()
 
     print("Launching MATLAB...")
-    eng = matlab.engine.start_matlab()
+    if desktop:
+        eng = matlab.engine.start_matlab("-desktop")
+    else:
+        eng = matlab.engine.start_matlab()
     print("MATLAB opened. Adding PILIA libraries to path...")
     # starts the engine and opens it
     eng.eval('addpath(genpath("PILIA"))')
@@ -80,10 +85,10 @@ def main():
             print("Post-processing started...")
             # change directory
             simres = {}
-            simres['rw1_omega'] = eng.workspace['RW1_omega']
-            simres['rw2_omega'] = eng.workspace['RW2_omega']
-            simres['rw3_omega'] = eng.workspace['RW3_omega']
-            simres['rw4_omega'] = eng.workspace['RW4_omega']
+            simres['rw1_omega'] = eng.workspace['rw1_omega']
+            simres['rw2_omega'] = eng.workspace['rw2_omega']
+            simres['rw3_omega'] = eng.workspace['rw3_omega']
+            simres['rw4_omega'] = eng.workspace['rw4_omega']
             print("Sending simulation results structure to MATLAB.")
             print("JSON file creation...")
             eng.workspace['simres'] = simres
