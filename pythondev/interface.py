@@ -89,6 +89,7 @@ def main():
             simres['rw2_omega'] = eng.workspace['rw2_omega']
             simres['rw3_omega'] = eng.workspace['rw3_omega']
             simres['rw4_omega'] = eng.workspace['rw4_omega']
+            simres['in_range'] = eng.workspace['in_range']
             print("Sending simulation results structure to MATLAB.")
             print("JSON file creation...")
             eng.workspace['simres'] = simres

@@ -22,9 +22,9 @@ function confRWS = conf_RWS()
 % confRWS.N_RWS=sqrt(3)/3*[1 -1 -1  1;
 %                          1  1 -1 -1;
 %                          1  1  1  1];
-confRWS.N_RWS=[1 0 0 0;
+confRWS.N_RWS=[0 0 0 0;
                0 0 0 0;
-               0 0 0 0];
+               1 0 0 0];
 
 % Matrix to pass from the satellite body frame to the Reaction Wheels
 % reference framee

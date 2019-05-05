@@ -17,11 +17,18 @@ confSatFeatures.mass = 2;
 % confSatFeatures.I_sat=[0.3   0.05  0.02;
 %                        0.05  0.4  -0.07;
 %                        0.02 -0.07  0.5];
-confSatFeatures.I_sat=[0.03    0.0005  0.0002;
-                       0.0005  0.04   -0.0007;
-                       0.0002 -0.0007  0.01];
-
-
+% confSatFeatures.I_sat=[0.03    0.0005  0.0002;
+%                        0.0005  0.03   -0.0007;
+%                        0.0002 -0.0007  0.01];
+% confSatFeatures.I_sat=[0.03    0  0;
+%                       0  0.03   0;
+%                       0 0  0.01];
+confSatFeatures.I_sat=[0.008    0  0;
+                      0  0.008   0;
+                      0 0  0.0025];
+% confSatFeatures.I_sat=[0.0025    0  0;
+%                       0  0.0025   0;
+%                       0 0  0.008];
 % External surface areas of the satellite [m^2] as defined in the
 % configuration files' description in the user manual
 confSatFeatures.Surfaces=[0.01; 0.02; 0.02];

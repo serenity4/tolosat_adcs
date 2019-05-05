@@ -10,6 +10,7 @@ function confInerPoint = conf_InerPoint ()
 %       defines the direction that the satellite shuold point to
 
 % Commanded quaternion of the inertial pointing (its norm must be unitary)
-confInerPoint.Qcom=[0; 1; 0; 0];
+% confInerPoint.Qcom=[0; 1; 0; 0];
+confInerPoint.Qcom=0.25*[sqrt(4); sqrt(4); sqrt(4); sqrt(4)];
 
 end
