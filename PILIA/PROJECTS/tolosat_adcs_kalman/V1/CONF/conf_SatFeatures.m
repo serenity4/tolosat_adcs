@@ -26,6 +26,7 @@ confSatFeatures.mass = 2;
 confSatFeatures.I_sat=[0.008    0  0;
                       0  0.008   0;
                       0 0  0.0025];
+% confSatFeatures.I_sat=eye(3);
 % confSatFeatures.I_sat=[0.0025    0  0;
 %                       0  0.0025   0;
 %                       0 0  0.008];

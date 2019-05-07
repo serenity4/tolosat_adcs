@@ -27,7 +27,7 @@ def plot_json(ifile):
     """
     with open(ifile, 'r') as ifile:
         simres = json.load(ifile)
-    rw_speeds = [simres['rw1_omega'], simres['rw2_omega'], simres['rw3_omega'], simres['rw4_omega']]
+    rw_speeds = [simres['results']['rw1_omega'], simres['results']['rw2_omega'], simres['results']['rw3_omega'], simres['results']['rw4_omega']]
     omega_max = 3200*pi/30
     plt.figure()
     for i in range(len(rw_speeds)):
@@ -53,11 +53,11 @@ def plotly_json(ifile, save=None):
         with open(save, 'w') as ofile:
             json.dump(simres, ofile, sort_keys=True, indent=4)
 
-    rw_speeds = [simres['rw1_omega'], simres['rw2_omega'], simres['rw3_omega'], simres['rw4_omega']]
-    in_range = simres['in_range']
+    rw_speeds = [simres['results']['rw1_omega'], simres['results']['rw2_omega'], simres['results']['rw3_omega'], simres['results']['rw4_omega']]
+    in_range = simres['results']['in_range']
     omega_max = 3200*pi/30
     N = len(rw_speeds[0])
-    dt = 1./8
+    dt = simres['conf']['time_step']
     timeline = np.linspace(dt, N*dt, N)
     data = []
     for i in range(len(rw_speeds)-3):
@@ -77,7 +77,7 @@ def plotly_json(ifile, save=None):
             'dash': 'dash'}
     )]
     data += [go.Scattergl(
-    x = timeline,
+    x = timeline[::int(1/(simres['conf']['ES_freq']*dt))],
     y = in_range,
     name= "In range",
     mode = 'lines',

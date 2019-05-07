@@ -83,22 +83,30 @@ def main():
             print('----- Configuration parameters successfully updated.')
         elif command[0] == 'pp':
             print("Post-processing started...")
-            # change directory
             simres = {}
-            simres['rw1_omega'] = eng.workspace['rw1_omega']
-            simres['rw2_omega'] = eng.workspace['rw2_omega']
-            simres['rw3_omega'] = eng.workspace['rw3_omega']
-            simres['rw4_omega'] = eng.workspace['rw4_omega']
-            simres['in_range'] = eng.workspace['in_range']
+            simres['results'] = {
+            'rw1_omega': eng.workspace['rw1_omega'],
+            'rw2_omega': eng.workspace['rw2_omega'],
+            'rw3_omega': eng.workspace['rw3_omega'],
+            'rw4_omega': eng.workspace['rw4_omega'],
+            'in_range': eng.workspace['in_range'],
+            }
+            simres['conf'] = {
+            'maxAngle_Obj': eng.workspace['ConfParam']['confMaxAngle']['Obj'],
+            'maxAngle_ES': eng.workspace['ConfParam']['confMaxAngle']['ES'],
+            'inertial_pointing_com': eng.workspace['ConfParam']['confInerPoint']['Qcom'],
+            'ES_freq': eng.workspace['ConfParam']['confES']['frequency'],
+            'time_step': eng.workspace['ConfParam']['confOrbit']['dt'],
+            }
+            simres['properties'] = {
+            'mass': eng.workspace['ConfParam']['confSatFeatures']['mass'],
+            'inertia': eng.workspace['ConfParam']['confSatFeatures']['I_sat'],
+            }
             print("Sending simulation results structure to MATLAB.")
             print("JSON file creation...")
             eng.workspace['simres'] = simres
-            # eng.workspace['simres']['rw1_omega'] = eng.workspace['RW1_omega']
-            # eng.workspace['simres']['rw2_omega'] = eng.workspace['RW2_omega']
-            # eng.workspace['simres']['rw3_omega'] = eng.workspace['RW3_omega']
-            # eng.workspace['simres']['rw4_omega'] = eng.workspace['RW4_omega']
-            # eng.eval("save('simres.mat', 'simres')")
             eng.workspace['json_simres'] = eng.eval("jsonencode(simres);")
+            # change directory to the location where you want to drop the file
             eng.eval("cd(\'" + path + "/" + path_simres + "\')")
             eng.workspace['output'] = eng.eval(
                 "fopen(\'" + simres_output + "\', 'w');")
@@ -108,9 +116,9 @@ def main():
             "cd(\'" + path + "/PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF\')")
             print("JSON file succesfully created at " +
                   path_simres + "/" + simres_output)
-            if len(command) > 1 and command[1] == '-plot':
+            if len(command) > 1 and (command[1] == '-plot' or command[1] == '-p'):
                 print("Plotting simulation results...")
-                if len(command) > 2 and command[2] == 'plotly':
+                if len(command) > 2 and command[2] == 'plotly' or command[1] == '-p':
                     plot.plotly_json(path_simres + '/' + simres_output)
                 else:
                     plot.plot_json(path_simres + '/' + simres_output)
