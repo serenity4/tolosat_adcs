@@ -14,7 +14,7 @@ function confEarthPointing = conf_EarthPointing()
 % Choose the vector of the satellite body frame which is towards the Earth
 % (the equivalent of the z-axis of the MRF in the figure 20 of the User
 % Manual). Please enter a unit vector.
-AxisToEarth = [1; 0; 0];
+AxisToEarth = [-1; 0; 0];
 
 % Choose the vector of the satellite body frame which is perpendicular to
 % the orbit (the equivalent of the y-axis of the MRF in the figure 20 of

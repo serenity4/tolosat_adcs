@@ -77,7 +77,7 @@ def plotly_json(ifile, save=None):
             'dash': 'dash'}
     )]
     data += [go.Scattergl(
-    x = timeline[::int(1/(simres['conf']['ES_freq']*dt))],
+    x = timeline,
     y = in_range,
     name= "In range",
     mode = 'lines',
