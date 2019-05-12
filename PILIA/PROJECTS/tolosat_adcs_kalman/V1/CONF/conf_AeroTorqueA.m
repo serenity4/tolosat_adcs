@@ -2,10 +2,10 @@ function confAeroTorqueA = conf_AeroTorqueA()
 
 % conf_AeroTorqueA - Configuration function of the AeroTorqueA block of the
 % PILIA library
-% 
+%
 %   This function allows you to enter a mean value of the drag coefficient
 %   of the satellite.
-% 
+%
 %   Outputs:
 %       - confAeroTorqueA: Matlab structure containing the mean drag
 %       coefficient of the satellite as well as data necessary for the
@@ -16,7 +16,7 @@ confAeroTorqueA.Cd=2.3;
 % confAeroTorque.Cd=0;
 
 % Atmospheric density [kg/m^3] at an altitude equal to h0
-confAeroTorqueA.rho0=1e-10;
+confAeroTorqueA.rho0=5e-12;
 
 % Altitude [m] at which tou evaluate rho0
 confAeroTorqueA.h0=400e3;
