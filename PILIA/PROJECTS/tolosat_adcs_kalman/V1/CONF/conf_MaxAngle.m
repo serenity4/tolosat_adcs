@@ -12,5 +12,5 @@ function max_angle = conf_MaxAngle()
 %       calculation of the atmospheric density.
 
 max_angle.Obj = 54*pi/180; %output in radians
-max_angle.ES = max_angle.Obj*0.9;
+max_angle.ES = max_angle.Obj*1;
 end

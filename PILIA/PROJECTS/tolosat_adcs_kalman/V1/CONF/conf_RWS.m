@@ -23,8 +23,8 @@ function confRWS = conf_RWS()
 %                          1  1 -1 -1;
 %                          1  1  1  1];
 confRWS.N_RWS=[0 0 0 0;
-               0 0 0 0;
-               1 0 0 0];
+               1 0 0 0;
+               0 0 0 0];
 
 % Matrix to pass from the satellite body frame to the Reaction Wheels
 % reference framee
@@ -37,7 +37,7 @@ confRWS.I_RWS=5e-6;
 confRWS.Tmax=6e-4;
 
 % Maximum angular velocity of the single wheel [rad/s]
-confRWS.OmegaMax=3200*pi/30;
+confRWS.OmegaMax= 4500*2*pi/60;
 
 % IntitOmegaRWS defines the initial angular velocity [rad/s] of each
 % Reaction Wheel. This is a 4x1 vector whose components define the initial
@@ -46,6 +46,8 @@ confRWS.OmegaMax=3200*pi/30;
 % not be taken into account. Please, do not change the dimensions of this
 % vector.
 confRWS.IntitOmegaRWS=[0; 0; 0; 0];
+
+confRWS.timeconstant = 20; %time constant in s
 
 % White noise power of the Reaction Wheels [-]
 confRWS.NoisePower=1e-14;
