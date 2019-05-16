@@ -98,10 +98,13 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('-save', type=str, default=None, help="Save a copy of the json file with the provided name.")
-    parser.add_argument('-ifile', type=str, default='pythondev/simres_data/simres.json', help="Input file, default is simulation result")
+    parser.add_argument('-ifile', type=str, default='simres', help="Input file, default is simulation result")
     args = parser.parse_args()
     save = args.save
     ifile = args.ifile
     if save is not None:
         save = "pythondev/simres_data/" + args.save + ".json"
+    if ifile is not None:
+        ifile = "pythondev/simres_data/" + args.ifile + ".json"
+
     plotly_json(ifile, save=save)
