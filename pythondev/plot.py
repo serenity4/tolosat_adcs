@@ -3,42 +3,6 @@ import matplotlib.pyplot as plt
 import json
 from numpy import pi
 
-def plot_mat(ifile):
-    """
-    TEMPORARY: do not use
-    """
-    import h5py
-    file = h5py.File('PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF/RW1_speed.mat', 'r')
-    data = np.array(file.get('omega'))
-    omega_max = 3200*pi/30
-    print(data)
-    plt.figure()
-    plt.plot(data[:,0], data[:,1])
-    plt.xlabel('time (s)')
-    plt.ylabel('RW1_speed')
-    plt.title('Reaction wheel #1 speed')
-    plt.hlines(omega_max, data[0,0], data[-1,0], label='maximum speed', color='red')
-    plt.legend(loc='lower right')
-    plt.show()
-
-def plot_json(ifile):
-    """
-    Plots simulation outputs from a .json file (matplotlib plots)
-    """
-    with open(ifile, 'r') as ifile:
-        simres = json.load(ifile)
-    rw_speeds = [simres['results']['rw1_omega'], simres['results']['rw2_omega'], simres['results']['rw3_omega'], simres['results']['rw4_omega']]
-    omega_max = 3200*pi/30
-    plt.figure()
-    for i in range(len(rw_speeds)):
-        plt.plot(rw_speeds[i], label='RW {}'.format(i))
-    plt.xlabel('time (s)')
-    plt.ylabel('RW speed')
-    plt.title('Reaction wheels speed')
-    plt.hlines(omega_max, 1, len(rw_speeds[0]), label='maximum speed')
-    plt.legend(loc='lower right')
-    plt.show()
-
 def plotly_json(ifile, save=None):
     """
     Plots simulation outputs from a .json file (Plotly plots)
