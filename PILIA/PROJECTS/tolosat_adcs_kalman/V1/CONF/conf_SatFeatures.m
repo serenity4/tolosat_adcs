@@ -35,6 +35,6 @@ confSatFeatures.I_sat=[0.0136    0  0;
 %                       0 0  0.008];
 % External surface areas of the satellite [m^2] as defined in the
 % configuration files' description in the user manual
-confSatFeatures.Surfaces=[0.01; 0.02; 0.02];
+confSatFeatures.Surfaces=[0.02; 0.02; 0.01];
 
 end
