@@ -19,8 +19,12 @@ def get_visibilities(timeline, ranges):
         if last_value != value and value:
             t0 = timeline[i]
         last_value = value
-    min_window = min(windows_length)
-    max_window = max(windows_length)
+    if len(visibilities) != 0:
+        min_window = min(windows_length)
+        max_window = max(windows_length)
+    else:
+        min_window = None
+        max_window = None
     return visibilities, windows_length, max_window, min_window
 
 if __name__ == "__main__":
@@ -49,12 +53,9 @@ if __name__ == "__main__":
     dt = simres['conf']['time_step']
     timeline = np.linspace(dt, N*dt, N)
     visibilities, windows_length, max_window, min_window = get_visibilities(timeline, ranges)
-    print(visibilities)
-    print(max_window)
-    print(min_window)
-    print(windows_length)
-    print(sum(windows_length))
-
-
-
-T = timeline[-1]
+    if len(visibilities) != 0:
+        print(visibilities)
+        print(max_window)
+        print(min_window)
+        print(windows_length)
+        print(sum(windows_length))

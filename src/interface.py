@@ -69,7 +69,7 @@ def set_paths(output_basename, model):
     path_dict = dict(path=path, simres=path_simres, model=model_path, workspace=workspace_path, pilia=pilia_path, simres_file=output_basename + ".json")
     return path_dict
 
-def start_matlab(path, sim_param):
+def start_matlab(path, sim_param, command):
     """Launches the MATLAB/Simulink engine and opens the model specified by model_path.
 
     Args:
@@ -113,7 +113,7 @@ def start_matlab(path, sim_param):
     eng.set_param(model_name, 'LibraryLinkDisplay', 'all', nargout=0)
     eng.set_param(model_name, 'MultiTaskRateTransMsg', 'warning', nargout=0)
     if sim_param['run']:
-        run(sim_param, model_name, eng)
+        run(sim_param, model_name, eng, command)
     return eng, model_name
 
 def update(eng):
@@ -122,12 +122,16 @@ def update(eng):
     eng.workspace['ConfParam'] = ConfParam
     print('----- Configuration parameters successfully updated.')
 
-def run(sim_param, model_name, eng):
+def run(sim_param, model_name, eng, command):
+    if command is not None and len(command) > 1:
+        if len(command) == 3 and command[1] == '-end':
+            eng.set_param(model_name, 'StopTime', command[2], nargout=0)
     print("Running the simulation (end = " + str(sim_param['end']) + ")...")
     eng.eval("sim(\'" + model_name + "\');")
     print("End of simulation.")
 
-def postprocess(eng, path, output_basename, command):
+
+def postprocess(eng, path, output_basename, command, sim_param):
     print("Post-processing started...")
     simres = {}
     simres['results'] = {
@@ -142,6 +146,7 @@ def postprocess(eng, path, output_basename, command):
     'inertial_pointing_com': eng.workspace['ConfParam']['confInerPoint']['Qcom'],
     'ES_freq': eng.workspace['ConfParam']['confES']['frequency'],
     'time_step': eng.workspace['ConfParam']['confOrbit']['dt'],
+    'end': sim_param['end'],
     }
     simres['properties'] = {
     'mass': eng.workspace['ConfParam']['confSatFeatures']['mass'],
@@ -161,12 +166,13 @@ def postprocess(eng, path, output_basename, command):
     "cd(\'" + path['path'] + "/PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF\')")
     print("JSON file succesfully created at " +
           path['simres'] + "/" + path['simres_file'])
-    if len(command) > 1 and (command[1] == '-plot' or command[1] == '-p'):
+    if len(command) > 1:
+        if command[1] == '-plot' or command[1] == '-p':
+            save_name = None
+        if len(command) == 3:
+            save_name = command[2]
         print("Plotting simulation results...")
-        if (len(command) > 2 and command[2] == 'plotly') or command[1] == '-p':
-            plot.plotly_json(path['simres'] + '/' + path['simres_file'])
-        else:
-            plot.plot_json(path['simres'] + '/' + path['simres_file'])
+        plot.plotly_json(path['simres'] + '/' + path['simres_file'], save_name = save_name)
         print("End of post-processing.")
 
 
@@ -178,7 +184,7 @@ def main():
     path = set_paths(output_basename, model)
 
     sim_param = dict(end=args.end, run=args.run, desktop=args.desktop, model=model, load=args.load)
-    eng, model_name = start_matlab(path, sim_param)
+    eng, model_name = start_matlab(path, sim_param, command=None)
 
     print("\n\033[32;1;4mWelcome to the PILIA python interfacer! Available commands are:")
     print("{:<7} - displays help\n{:<7} - update workspace with new configuration variables\n{:<7} - post-processes data\n{:<7} - exits the prompt\033[30;0;4m\n".format("help", "update", "pp", "exit"))
@@ -188,9 +194,9 @@ def main():
         command = input().split(sep=" ")
         if command[0] == 'help':
             print("You may configure the parameters in your CONF folder, then update the model to take the changes into account.")
-        elif command[0] == 'run': run(sim_param, model_name, eng)
+        elif command[0] == 'run': run(sim_param, model_name, eng, command)
         elif command[0] == 'update': update(eng)
-        elif command[0] == 'pp': postprocess(eng, path, output_basename, command)
+        elif command[0] == 'pp': postprocess(eng, path, output_basename, command, sim_param)
         elif command[0] == 'exec': eng.eval(command[1:])
         elif command[0] == 'exit':
             # os.system(r'del -Force -Recurse .\PILIA\PROJECTS\tolosat_adcs_kalman\V1\CONF\slprj')
