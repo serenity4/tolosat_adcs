@@ -32,9 +32,9 @@ if __name__ == "__main__":
     save = args.save
     ifile = args.ifile
     if save is not None:
-        save = "pythondev/simres_data/" + args.save + ".json"
+        save = "src/simres_data/" + args.save + ".json"
     if ifile is not None:
-        ifile = "pythondev/simres_data/" + args.ifile + ".json"
+        ifile = "src/simres_data/" + args.ifile + ".json"
 
     with open(ifile, 'r') as ifile:
         simres = json.load(ifile)

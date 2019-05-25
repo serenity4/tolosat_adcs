@@ -7,19 +7,19 @@ def main(args):
     index = ['t', 'x', 'y', 'z', 'vx', 'vy', 'vz']
     dict = {}
     for i in range(len(index)):
-        with open('./pythondev/temp/' + index[i] + '.txt', 'r') as ifile:
+        with open('./src/temp/' + index[i] + '.txt', 'r') as ifile:
             dict[index[i]] = np.loadtxt(ifile).tolist()
     with open(args.ofile, 'w') as ofile:
         json.dump(dict, ofile, sort_keys=True, indent=4)
 
 
-    # t = sio.read('./pythondev/temp/t.txt')
-    # x = sio.read('./pythondev/temp/x.txt')
-    # y = sio.read('./pythondev/temp/y.txt')
-    # z = sio.read('./pythondev/temp/z.txt')
-    # vx = sio.read('./pythondev/temp/vx.txt')
-    # vy = sio.read('./pythondev/temp/vy.txt')
-    # vz = sio.read('./pythondev/temp/vz.txt')
+    # t = sio.read('./src/temp/t.txt')
+    # x = sio.read('./src/temp/x.txt')
+    # y = sio.read('./src/temp/y.txt')
+    # z = sio.read('./src/temp/z.txt')
+    # vx = sio.read('./src/temp/vx.txt')
+    # vy = sio.read('./src/temp/vy.txt')
+    # vz = sio.read('./src/temp/vz.txt')
 
 
 

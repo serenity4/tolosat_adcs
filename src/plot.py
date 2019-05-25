@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 import json
 from numpy import pi
 
+def save(simres, ofile):
+    with open(ofile, 'w') as tosave:
+        json.dump(simres, tosave)
+
 def plotly_json(ifile, save=None):
     """
     Plots simulation outputs from a .json file (Plotly plots)
@@ -13,24 +17,23 @@ def plotly_json(ifile, save=None):
         simres = json.load(ifile)
 
     ### save file is the option is provided
-    if save is not None:
-        with open(save, 'w') as ofile:
-            json.dump(simres, ofile, sort_keys=True, indent=4)
 
-    rw_speeds = [simres['results']['rw1_omega'], simres['results']['rw2_omega'], simres['results']['rw3_omega'], simres['results']['rw4_omega']]
+    if save is not None:
+        save(simres, ofile=save)
+
+    rw_speed = simres['results']['rw1_omega']
     in_range = simres['results']['in_range']
     omega_max = 3200*pi/30
-    N = len(rw_speeds[0])
+    N = len(rw_speed)
     dt = simres['conf']['time_step']
     timeline = np.linspace(dt, N*dt, N)
     data = []
-    for i in range(len(rw_speeds)-3):
-        data += [go.Scattergl(
-        x = timeline,
-        y = rw_speeds[i],
-        mode = 'lines',
-        name = "RW " + str(i+1)
-        )]
+    data += [go.Scattergl(
+    x = timeline,
+    y = rw_speed,
+    mode = 'lines',
+    name = "RW 1"
+    )]
     data += [go.Scattergl(
     x = [0, N*dt],
     y = [omega_max, omega_max],
@@ -67,8 +70,8 @@ if __name__ == "__main__":
     save = args.save
     ifile = args.ifile
     if save is not None:
-        save = "pythondev/simres_data/" + args.save + ".json"
+        save = "src/simres_data/" + args.save + ".json"
     if ifile is not None:
-        ifile = "pythondev/simres_data/" + args.ifile + ".json"
+        ifile = "src/simres_data/" + args.ifile + ".json"
 
     plotly_json(ifile, save=save)

@@ -1,18 +1,18 @@
 MATLAB/*
 __pycache__
 temp-plot.html
-pythondev/simres_data
+src/simres_data
 References/(Space technology series) David A Vallado - Fundamentals of astrodynamics and applications-McGraw-Hill (1997).pdf
 slprj/*
-pythondev/positions/GMAT/*.txt
-pythondev/positions/JSON/*.json
+src/positions/GMAT/*.txt
+src/positions/JSON/*.json
 *.mat
 tosend
 PILIA/CodeForVTS
 PILIA/DOC
 PILIA/GUI
 PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF/slprj
-pythondev/simres_plots
+src/simres_plots
 *.slxc
 
 

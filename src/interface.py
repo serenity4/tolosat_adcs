@@ -46,18 +46,19 @@ def set_paths(output_basename, model):
     Returns:
         path_dict (dict): Dicitonary containing the following keys/values:
             path (str): Unix-formatted path of the current working directory
-            path_simres (str): Path of the simulation data folder (used for post-processing).
-            model_path (str): Path of the Simulink model.
-            workspace_path (str): Path of the workspace CONF folder.
-            pilia_path (str): Path of the PILIA folder.
+            simres (str): Path of the simulation data folder (used for post-processing).
+            simres_file (str): Name of the simulation data file (used for post-processing)
+            model (str): Path of the Simulink model.
+            workspace (str): Path of the workspace CONF folder.
+            pilia (str): Path of the PILIA folder.
     """
 
     path = os.getcwd().replace('\\', '/')
-    path_simres = 'pythondev/simres_data'
+    path_simres = 'src/simres_data'
     workspace_path = "PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF"
     pilia_path = "PILIA"
     assert path.split(
-        '/')[-1] == 'tolosat_adcs', "You must launch from the pythondev root folder"
+        '/')[-1] == 'tolosat_adcs', "You must launch from the src root folder"
     if model == 'V1' or model == 'Detumbling' or model == 'Control' or 'RW_1':
         model = model + '.slx'
         model_path = 'PILIA/PROJECTS/tolosat_adcs_kalman/V1/' + model
@@ -65,7 +66,7 @@ def set_paths(output_basename, model):
         print("Unknown model. Process aborted.")
         exit()
 
-    path_dict = dict(path=path, simres=path_simres, model=model_path, workspace=workspace_path, pilia=pilia_path)
+    path_dict = dict(path=path, simres=path_simres, model=model_path, workspace=workspace_path, pilia=pilia_path, simres_file=output_basename + ".json")
     return path_dict
 
 def start_matlab(path, sim_param):
@@ -112,10 +113,8 @@ def start_matlab(path, sim_param):
     eng.set_param(model_name, 'LibraryLinkDisplay', 'all', nargout=0)
     eng.set_param(model_name, 'MultiTaskRateTransMsg', 'warning', nargout=0)
     if sim_param['run']:
-        print("Running the simulation (end = " + str(sim_param['end']) + ")...")
-        eng.eval("sim(\'" + model_name + "\');")
-        print("End of simulation.")
-    return eng
+        run(sim_param, model_name, eng)
+    return eng, model_name
 
 def update(eng):
     eng.eval('clear', nargout=0)
@@ -123,15 +122,19 @@ def update(eng):
     eng.workspace['ConfParam'] = ConfParam
     print('----- Configuration parameters successfully updated.')
 
-def postprocess(eng, path, output_basename):
+def run(sim_param, model_name, eng):
+    print("Running the simulation (end = " + str(sim_param['end']) + ")...")
+    eng.eval("sim(\'" + model_name + "\');")
+    print("End of simulation.")
+
+def postprocess(eng, path, output_basename, command):
     print("Post-processing started...")
     simres = {}
     simres['results'] = {
     'rw1_omega': eng.workspace['rw1_omega'],
-    'rw2_omega': eng.workspace['rw2_omega'],
-    'rw3_omega': eng.workspace['rw3_omega'],
-    'rw4_omega': eng.workspace['rw4_omega'],
     'in_range': eng.workspace['in_range'],
+    'satpos_j2000': eng.workspace['SatPos_J2000'],
+
     }
     simres['conf'] = {
     'maxAngle_Obj': eng.workspace['ConfParam']['confMaxAngle']['Obj'],
@@ -149,21 +152,21 @@ def postprocess(eng, path, output_basename):
     eng.workspace['simres'] = simres
     eng.workspace['json_simres'] = eng.eval("jsonencode(simres);")
     # change directory to the location where you want to drop the file
-    eng.eval("cd(\'" + path + "/" + path_simres + "\')")
+    eng.eval("cd(\'" + path['path'] + "/" + path['simres'] + "\')")
     eng.workspace['output'] = eng.eval(
-        "fopen(\'" + output_basename + "\', 'w');")
+        "fopen(\'" + path['simres_file'] + "\', 'w');")
     eng.eval("fwrite(output, json_simres, 'char')")
     eng.eval("fclose(output);")
     eng.eval(
-    "cd(\'" + path + "/PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF\')")
+    "cd(\'" + path['path'] + "/PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF\')")
     print("JSON file succesfully created at " +
-          path_simres + "/" + simres_output)
+          path['simres'] + "/" + path['simres_file'])
     if len(command) > 1 and (command[1] == '-plot' or command[1] == '-p'):
         print("Plotting simulation results...")
-        if len(command) > 2 and command[2] == 'plotly' or command[1] == '-p':
-            plot.plotly_json(path_simres + '/' + simres_output)
+        if (len(command) > 2 and command[2] == 'plotly') or command[1] == '-p':
+            plot.plotly_json(path['simres'] + '/' + path['simres_file'])
         else:
-            plot.plot_json(path_simres + '/' + simres_output)
+            plot.plot_json(path['simres'] + '/' + path['simres_file'])
         print("End of post-processing.")
 
 
@@ -175,17 +178,19 @@ def main():
     path = set_paths(output_basename, model)
 
     sim_param = dict(end=args.end, run=args.run, desktop=args.desktop, model=model, load=args.load)
-    eng = start_matlab(path, sim_param)
+    eng, model_name = start_matlab(path, sim_param)
 
     print("\n\033[32;1;4mWelcome to the PILIA python interfacer! Available commands are:")
     print("{:<7} - displays help\n{:<7} - update workspace with new configuration variables\n{:<7} - post-processes data\n{:<7} - exits the prompt\033[30;0;4m\n".format("help", "update", "pp", "exit"))
 
     while 1:
+        print(">>>  ", end="", flush=True)
         command = input().split(sep=" ")
         if command[0] == 'help':
             print("You may configure the parameters in your CONF folder, then update the model to take the changes into account.")
+        elif command[0] == 'run': run(sim_param, model_name, eng)
         elif command[0] == 'update': update(eng)
-        elif command[0] == 'pp': postprocess(eng, path, output_basename)
+        elif command[0] == 'pp': postprocess(eng, path, output_basename, command)
         elif command[0] == 'exec': eng.eval(command[1:])
         elif command[0] == 'exit':
             # os.system(r'del -Force -Recurse .\PILIA\PROJECTS\tolosat_adcs_kalman\V1\CONF\slprj')
