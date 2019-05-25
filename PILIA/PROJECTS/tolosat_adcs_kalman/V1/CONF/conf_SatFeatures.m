@@ -11,7 +11,7 @@ function confSatFeatures = conf_SatFeatures()
 %       surface areas (see the user manual for more information)
 
 % Mass of the satellite [kg]
-confSatFeatures.mass = 2;
+confSatFeatures.mass = 2.5;
 
 % Satellite's inertia matrix [kg*m^2]
 % confSatFeatures.I_sat=[0.3   0.05  0.02;

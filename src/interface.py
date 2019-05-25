@@ -29,7 +29,7 @@ def argparse():
                         help="End simulation time")
     parser.add_argument('--run', dest='run', action='store_true', help="Call with this option to automatically run the Simulink model when loaded.")
     parser.add_argument('--desktop', dest='desktop', action='store_true', help="Call with this option to run MATLAB in desktop mode.")
-    parser.add_argument('-basename', type=str, default='simres.json', help="Basename used for the simulation output.")
+    parser.add_argument('-basename', type=str, default='simres', help="Basename used for the simulation output.")
     parser.add_argument('--load-only', dest='load', action='store_true', help="Use this flag to load the model without opening it.")
     args = parser.parse_args()
     return args
