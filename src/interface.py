@@ -126,6 +126,7 @@ def run(sim_param, model_name, eng, command):
     if command is not None and len(command) > 1:
         if len(command) == 3 and command[1] == '-end':
             eng.set_param(model_name, 'StopTime', command[2], nargout=0)
+            sim_param['end'] = command[2]
     print("Running the simulation (end = " + str(sim_param['end']) + ")...")
     eng.eval("sim(\'" + model_name + "\');")
     print("End of simulation.")

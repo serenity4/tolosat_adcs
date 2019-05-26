@@ -17,10 +17,10 @@ function confSatDyn = conf_SatDyn(Isat)
 % Initial angular velocity of the satellite [rad/s], in the satellite
 % reference frame
 % confSatDyn.InitOmega_sat = [0; 0; 0];
-confSatDyn.InitOmega_sat = [0; 0.03*pi/180; 0];
+% confSatDyn.InitOmega_sat = [0; 0.03*pi/180; 0];
 % confSatDyn.InitOmega_sat = [0.6*pi/180; 3*pi/180; 0.5*pi/180];
 % confSatDyn.InitOmega_sat = [0.3*pi/180; 0.3*pi/180; 0*pi/180];
-% confSatDyn.InitOmega_sat = [15*pi/180; 15*pi/180; 15*pi/180];
+confSatDyn.InitOmega_sat = [20*pi/180; 20*pi/180; 20*pi/180];
 
 % Initial attitude of the satellite, in the form of a quaternion of
 % rotation
