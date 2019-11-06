@@ -1,7 +1,12 @@
+"""Converts text-formatted data into JSON-formatted data, from text files located in 'temp' folder. Intended use is with the bash script extract_data.sh
+"""
+
 import json
 import numpy as np
 import argparse
 import os
+
+filename =
 
 def main(args):
     index = ['t', 'x', 'y', 'z', 'vx', 'vy', 'vz']

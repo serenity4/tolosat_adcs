@@ -1,3 +1,6 @@
+"""Calculates inertia.
+"""
+
 import numpy as np
 r = 5e-2  # cm
 h = 20e-2  # cm

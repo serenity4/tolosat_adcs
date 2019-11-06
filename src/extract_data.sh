@@ -1,5 +1,5 @@
 #!/bin/bash
-# Gets data from file
+# Gets data from files
 
 file=$1
 depth='-n +2'
