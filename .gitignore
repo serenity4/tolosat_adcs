@@ -8,9 +8,7 @@ src/positions/GMAT/*.txt
 src/positions/JSON/*.json
 *.mat
 tosend
-PILIA/CodeForVTS
 PILIA/DOC
-PILIA/GUI
 PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF/slprj
 src/simres_plots
 *.slxc
