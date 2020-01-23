@@ -55,13 +55,16 @@ def set_paths(output_basename, model):
 
     path = os.getcwd().replace('\\', '/')
     path_simres = 'src/simres_data'
-    workspace_path = "PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF"
+    # workspace_path = "PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF"
+    workspace_path = "PILIA/PROJECTS/Control_PD/CONF"
     pilia_path = "PILIA"
     assert path.split(
         '/')[-1] == 'tolosat_adcs', "You must launch from the src root folder"
-    if model == 'V1' or model == 'Detumbling' or model == 'Control' or 'RW_1':
+    # if model == 'V1' or model == 'Detumbling' or model == 'Control' or 'RW_1':
+    if model == 'Control_PD':
         model = model + '.slx'
-        model_path = 'PILIA/PROJECTS/tolosat_adcs_kalman/V1/' + model
+        # model_path = 'PILIA/PROJECTS/tolosat_adcs_kalman/V1/' + model
+        model_path = 'PILIA/PROJECTS/Control_PD/' + model
     else:
         print("Unknown model. Process aborted.")
         exit()

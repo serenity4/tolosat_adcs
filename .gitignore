@@ -10,6 +10,7 @@ src/positions/JSON/*.json
 tosend
 PILIA/DOC
 PILIA/PROJECTS/tolosat_adcs_kalman/V1/CONF/slprj
+PILIA/CodeForVTS
 src/simres_plots
 *.slxc
 !PILIA/LIBRARY/Environment/EarthMagneticField/IGRFmodel/*.mat
